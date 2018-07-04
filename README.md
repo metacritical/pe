@@ -1,2 +1,2 @@
-# pe
-Programmable Editor in Scheme
+# pe (PE Programmable Editor)
+Programmable Editor written in Scheme
