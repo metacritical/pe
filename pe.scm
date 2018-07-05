@@ -9,6 +9,6 @@
 	 (loop)))))
 
 (define (main)
-  (with-stty '(not echo icanon isig) read-text))
+  (with-stty '(not echo icanon isig ixon icrnl opost) read-text))
 
 (main)
