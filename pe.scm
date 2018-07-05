@@ -8,7 +8,7 @@
      (if (not (eq? key-in #\q))
 	 (loop)))))
 
-(define (main-loop)
- (with-stty '(not echo icanon) read-text))
+(define (main)
+  (with-stty '(not echo icanon isig) read-text))
 
-(main-loop)
+(main)
