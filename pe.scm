@@ -1,11 +1,14 @@
 (require-extension stty srfi-14)
 
-(define (read-text prompt)
-    (display prompt)
-    (let [[input (read-char)]]
-     (format "+> ~S" input)))
+(define (read-text)
+  (display "=> ")
+  (let loop []
+    (let [[key-in (read-char)]]
+     (display (format "~S " key-in))
+     (if (not (eq? key-in #\q))
+	 (loop)))))
 
 (define (main-loop)
- (with-stty '(echo icanon) (read-text "=> ")))
+ (with-stty '(not echo icanon) read-text))
 
 (main-loop)
