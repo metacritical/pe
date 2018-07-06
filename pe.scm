@@ -1,4 +1,6 @@
-(require-extension stty srfi-14)
+(require-extension stty srfi-14 ioctl)
+
+;;(ioctl-winsize) for terminal size.
 
 (define (read-text)
   (let loop []
