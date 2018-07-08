@@ -1,27 +1,28 @@
 (require-extension stty srfi-14 ioctl)
 
-;;(ioctl-winsize) for terminal size.
-
 (define (read-text)
-  (let loop []
-    (let [[key-in (read-char)]]
+  (let [[key-in (read-char)]]
      (write-string (format "~S " key-in))
      (if (not (eq? key-in #\q))
-	 (loop)))))
+	 (read-text))))
 
-(define (clear-screen) (write-string "\x1b[2J"))
-(define (reposition-cursor) (write-string "\x1b[H"))
+(define screen-size (ioctl-winsize))
+(define clear-screen "\x1b[2J")
+(define reposition-cursor "\x1b[H")
+(define (editor-draw-rows)
+  (let [[rows (car screen-size)]]
+    (let loop [[step 0] [str ""]]
+      (if (= step rows)
+	  (write-string str)
+	  (loop (+ step 1) (string-append str "~\r\n"))))))
 
-(define (init-screen)
-  (clear-screen)
-  (reposition-cursor))
+(define (redraw-screen)
+  (write-string (string-append clear-screen reposition-cursor)))
 
-(define (setup-exit-routines)
-  (on-exit (lambda () (init-screen))))
+(define (setup-exit-routines) (on-exit redraw-screen))
 
-(define (main)
-  (init-screen)
-  (setup-exit-routines)
-  (with-stty '(not echo icanon isig ixon icrnl opost) read-text))
-
-(main)
+((lambda []
+   (redraw-screen)
+   (setup-exit-routines)
+   (editor-draw-rows)
+   (with-stty '(not echo icanon isig ixon icrnl opost) read-text)))

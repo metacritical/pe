@@ -1,0 +1,6 @@
+((license "MIT")
+ (category editor)
+ (needs stty ioctl srfi-14)
+ (test-depends test)
+ (author "Pankaj Doharey a.k.a Metacritical")
+ (synopsis "pe - (PE Programmable Editor)"))

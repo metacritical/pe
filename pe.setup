@@ -1,0 +1,3 @@
+(compile -d2 pe.scm -o pe)
+
+(install-program 'pe "pe" '((version "0.1")))
