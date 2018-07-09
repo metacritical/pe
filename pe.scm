@@ -6,9 +6,11 @@
      (if (not (eq? key-in #\q))
 	 (read-text))))
 
+(define text-buffer "")
 (define screen-size (ioctl-winsize))
 (define clear-screen "\x1b[2J")
 (define reposition-cursor "\x1b[H")
+(define get-cursor-position "\x1b[6n")
 (define (editor-draw-rows)
   (let [[rows (car screen-size)]]
     (let loop [[step 0] [str ""]]
@@ -25,4 +27,6 @@
    (redraw-screen)
    (setup-exit-routines)
    (editor-draw-rows)
+   (write-string get-cursor-position)
+   (write-string reposition-cursor)
    (with-stty '(not echo icanon isig ixon icrnl opost) read-text)))
