@@ -1,12 +1,9 @@
-(require-extension stty srfi-14 ioctl)
-
-(define (read-text)
-  (let [[key-in (read-char)]]
-     (write-string (format "~S " key-in))
-     (if (not (eq? key-in #\q))
-	 (read-text))))
+(require-extension stty srfi-14 ioctl extras utils)
+(import chicken scheme)
+(use chicken-syntax)
 
 (define tmp-buffer "")
+
 (define (to<-tmpb str)
   (set! tmp-buffer (string-append tmp-buffer str)))
 
@@ -20,18 +17,6 @@
 (define hide-cursor "\x1b[?25l")
 (define show-cursor "\x1b[?25h")
 
-(define (editor-draw-rows)
-  (let [[rows (car screen-size)]]
-    (let loop [[step 0] [str ""]]
-      (if (< step rows)
-	  (loop (+ step 1) (to<-tmpb "~\r\n"))))))
-
-(define (redraw-screen)
-  (to<-tmpb (string-append hide-cursor clear-screen reset-cursor show-cursor)))
-
-(define (post-draw-routine)
-  (to<-tmpb (string-append hide-cursor reset-cursor show-cursor)))
-
 (define (exit-routines)
   (to<-tmpb clear-screen)
   (reify-buffer tmp-buffer))
@@ -44,8 +29,7 @@
 (on-exit exit-routines)
 
 ((lambda []
-   (redraw-screen)
-   (editor-draw-rows)
-   (post-draw-routine)
-   (reify-buffer tmp-buffer)
-   (with-stty '(not echo icanon isig ixon icrnl opost) read-text)))
+   (apply require '("core/init.scm"))))
+
+;; (compile-file "core/init.scm")
+;; (eval '(include "init.scm"))
