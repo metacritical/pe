@@ -1,6 +1,6 @@
+(require-library extras utils posix)
 (require-extension stty srfi-14 ioctl extras utils)
-(import chicken scheme)
-(use chicken-syntax)
+(use posix)
 
 (define tmp-buffer "")
 

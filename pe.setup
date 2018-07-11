@@ -1,3 +1,4 @@
-(compile -d2 pe.scm -o pe)
-
-(install-program 'pe "pe" '((version "0.1")))
+(run (rm -rf pe pe.o))
+(run (chicken-install -prefix $PWD/pe -deploy stty srfi-14 ioctl extras utils posix))
+(compile -deploy -d1 pe.scm)
+(run (cp -r core pe/))

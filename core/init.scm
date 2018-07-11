@@ -7,10 +7,9 @@
 	 (read-text))))
 
 (define (editor-draw-rows)
-  (let [[rows (car screen-size)]]
-    (let loop [[step 0] [str ""]]
-      (if (< step rows)
-	  (loop (+ step 1) (to<-tmpb "~\r\n"))))))
+  (let loop [[step 0] [str ""] [rows (car screen-size)]]
+    (if (< step rows)
+	(loop (+ step 1) (to<-tmpb "~\r\n") rows))))
 
 (define (redraw-screen)
   (to<-tmpb (string-append hide-cursor clear-screen reset-cursor show-cursor)))
