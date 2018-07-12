@@ -28,8 +28,8 @@
 ;;Init Exit Routines
 (on-exit exit-routines)
 
-((lambda []
-   (apply require '("core/init.scm"))))
+;;Init
+(apply require '("core/init.scm"))
 
 ;; (compile-file "core/init.scm")
 ;; (eval '(include "init.scm"))
