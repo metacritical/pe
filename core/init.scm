@@ -2,9 +2,8 @@
 
 (define (read-text)
   (let [[key-in (read-char)]]
-     (write-string (format "~S " key-in))
-     (if (not (eq? key-in #\q))
-	 (read-text))))
+    (cond [(eq? key-in #\x01) (print "Ctrl-a")]
+	  (else (read-text)))))
 
 (define (editor-draw-rows)
   (let loop [[step 0] [str ""] [rows (car screen-size)]]
@@ -22,3 +21,8 @@
 (post-draw-routine)
 (reify-buffer tmp-buffer)
 (with-stty '(not echo icanon isig ixon icrnl opost) read-text)
+
+
+;; (write-string (format "~S " key-in))
+;; (if (not (eq? key-in #\q))
+	 ;; (read-text))
