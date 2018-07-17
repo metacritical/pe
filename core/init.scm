@@ -2,8 +2,16 @@
 
 (define (read-text)
   (let [[key-in (read-char)]]
-    (cond [(eq? key-in #\x01) (print "Ctrl-a")]
-	  (else (read-text)))))
+    (if (not (eq? key-in #\q))
+	(begin
+	  (cond [(eq? key-in #\x01) (display "Ctrl-a")]
+		[(eq? key-in #\x11) (display "Ctrl-q")]
+		[(eq? key-in #\escape) (display "Escaped \n")]
+		[(eq? key-in #\[) (display "Bracket \n")]
+		[(eq? key-in #\A) (display "UP \n")]
+		(else (display (format "~S" key-in))))
+	  (read-text))
+	)))
 
 (define (editor-draw-rows)
   (let loop [[step 0] [str ""] [rows (car screen-size)]]
@@ -21,8 +29,3 @@
 (post-draw-routine)
 (reify-buffer tmp-buffer)
 (with-stty '(not echo icanon isig ixon icrnl opost) read-text)
-
-
-;; (write-string (format "~S " key-in))
-;; (if (not (eq? key-in #\q))
-	 ;; (read-text))

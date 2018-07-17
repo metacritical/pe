@@ -17,7 +17,7 @@
 (define hide-cursor "\x1b[?25l")
 (define show-cursor "\x1b[?25h")
 
-(define-record x y)
+(define-record editor-config x y)
 
 (define (exit-routines)
   (to<-tmpb clear-screen)
@@ -32,6 +32,3 @@
 
 ;;Init
 (apply require '("core/init.scm"))
-
-;; (compile-file "core/init.scm")
-;; (eval '(include "init.scm"))
