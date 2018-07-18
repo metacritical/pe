@@ -17,8 +17,6 @@
 (define hide-cursor "\x1b[?25l")
 (define show-cursor "\x1b[?25h")
 
-(define-record editor-config x y)
-
 (define (exit-routines)
   (to<-tmpb clear-screen)
   (reify-buffer tmp-buffer))
@@ -26,6 +24,12 @@
 (define (reify-buffer buff)
   (write-string buff)
   (clear-buffer buff))
+
+(define editor-config
+  (list (cons 'buffer-list '())
+	(cons 'frames '())
+	(cons 'windows '())
+	(cons 'mode-line '())))
 
 ;;Init Exit Routines
 (on-exit exit-routines)

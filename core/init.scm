@@ -24,6 +24,10 @@
 (define (post-draw-routine)
   (to<-tmpb (string-append hide-cursor reset-cursor show-cursor)))
 
+(define (generate-new-buffer)
+  '((cons 'name "*noname*")
+    (cons 'cursor (cons 0 0))))
+
 (redraw-screen)
 (editor-draw-rows)
 (post-draw-routine)
