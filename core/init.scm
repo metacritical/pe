@@ -25,7 +25,7 @@
   (to<-tmpb (string-append hide-cursor reset-cursor show-cursor)))
 
 (define (generate-new-buffer)
-  '((cons 'name "*noname*")
+  '((cons 'name "(New file)")
     (cons 'cursor (cons 0 0))))
 
 (redraw-screen)

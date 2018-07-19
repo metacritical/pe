@@ -29,7 +29,8 @@
   (list (cons 'buffer-list '())
 	(cons 'frames '())
 	(cons 'windows '())
-	(cons 'mode-line '())))
+	(cons 'mode-line '())
+	(cons 'echo-area "")))
 
 ;;Init Exit Routines
 (on-exit exit-routines)
