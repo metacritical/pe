@@ -28,8 +28,10 @@
   '((cons 'name "(New file)")
     (cons 'cursor (cons 0 0))))
 
+
+(system "stty -ixon")
 (redraw-screen)
 (editor-draw-rows)
 (post-draw-routine)
 (reify-buffer tmp-buffer)
-(with-stty '(not echo icanon isig ixon icrnl opost) read-text)
+(with-stty '(not echo icanon isig icrnl opost) read-text)
