@@ -1,17 +1,9 @@
+(require "core/keyboard.scm")
 (require-extension stty)
 
 (define (read-text)
-  (let [[key-in (read-char)]]
-    (if (not (eq? key-in #\q))
-	(begin
-	  (cond [(eq? key-in #\x01) (display "Ctrl-a")]
-		[(eq? key-in #\x11) (display "Ctrl-q")]
-		[(eq? key-in #\escape) (display "Escaped \n")]
-		[(eq? key-in #\[) (display "Bracket \n")]
-		[(eq? key-in #\A) (display "UP \n")]
-		(else (display (format "~S" key-in))))
-	  (read-text))
-	)))
+  (let [[key (read-char)]]
+    (handle-kb key)))
 
 (define (editor-draw-rows)
   (let loop [[step 0] [str ""] [rows (car screen-size)]]
@@ -27,7 +19,6 @@
 (define (generate-new-buffer)
   '((cons 'name "(New file)")
     (cons 'cursor (cons 0 0))))
-
 
 (system "stty -ixon")
 (redraw-screen)
