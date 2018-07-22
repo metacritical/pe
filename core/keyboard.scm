@@ -4,12 +4,12 @@
     ["DEL" #\delete]
     ["BKSPC" #\backspace]
     ["RET" #\return]
-    ["C-a" #\x01]
-    ["C-b" #\x02]
-    ["C-c" #\x03]
-    ["C-d" #\x04]
-    ["C-e" #\x05]
-    ["C-f" #\x06]
+    ["C-a" #\x1]
+    ["C-b" #\x2]
+    ["C-c" #\x3]
+    ["C-d" #\x4]
+    ["C-e" #\x5]
+    ["C-f" #\x6]
     ["C-g" #\alarm]
     ["C-h" #\backspace]
     ["C-i" #\tab]
@@ -31,21 +31,14 @@
     ["C-y" #\x19]
     ["C-z" #\x1a]))
 
-(define (get-keycode str)
-  (find (lambda (kmap) (eq? (car kmap) str)) key-map))
+(define (kbd str)
+   (filter (lambda (kmap) (equal? str (car kmap))) key-map))
 
-(define (kbd key-seq)
-  "Returns key code for string")
-
-
+(define (kbd-seq code)
+  (filter (lambda (kmap) (eq? code (cadr kmap))) key-map))
 
 (define (handle-kb key)
   (if (not (eq? key #\q))
-      (begin
-	(cond [(eq? key #\x03) (display (format "~S" key))]
-	      [(eq? key #\x11) (display "Ctrl-q")]
-	      [(eq? key #\escape) (display (format "~S" key))]
-	      [(eq? key #\[) (display "Bracket \n")]
-	      [(eq? key #\A) (display "UP \n")]
-	      (else (display (format "~S" key))))
+      (let [[code (kbd-seq key)]]
+	(if (null? code)(display key) (display (caar code)))
 	(read-text))))

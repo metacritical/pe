@@ -1,5 +1,5 @@
+(require-extension stty srfi-1)
 (require "core/keyboard.scm")
-(require-extension stty)
 
 (define (read-text)
   (let [[key (read-char)]]
