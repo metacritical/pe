@@ -1,7 +1,7 @@
 (require-extension stty srfi-1)
 (require "core/keyboard.scm")
 
-(define (read-text)
+(define (read-key)
   (let [[key (read-char)]]
     (handle-kb key)))
 
@@ -25,4 +25,4 @@
 (editor-draw-rows)
 (post-draw-routine)
 (reify-buffer tmp-buffer)
-(with-stty '(not echo icanon isig icrnl opost) read-text)
+(with-stty '(not echo icanon isig icrnl opost) read-key)

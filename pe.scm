@@ -36,4 +36,4 @@
 (on-exit exit-routines)
 
 ;;Init
-(apply require '("core/init.scm"))
+(require "core/init.scm")

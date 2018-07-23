@@ -41,4 +41,4 @@
   (if (not (eq? key #\q))
       (let [[code (kbd-seq key)]]
 	(if (null? code)(display key) (display (caar code)))
-	(read-text))))
+	(read-key))))
