@@ -1,5 +1,5 @@
 (require-library extras utils posix)
-(require-extension stty srfi-14 ioctl extras utils)
+(require-extension srfi-14 ioctl extras utils)
 (use posix)
 
 (define tmp-buffer "")
@@ -16,16 +16,18 @@
 (define get-cursor-position "\x1b[6n")
 (define hide-cursor "\x1b[?25l")
 (define show-cursor "\x1b[?25h")
+(define (move-cursor-to x y) (format "\x1b[~S;~SH" y x))
 
 (define (exit-routines)
   (to<-tmpb clear-screen)
+  (to<-tmpb reset-cursor)
   (reify-buffer tmp-buffer))
 
 (define (reify-buffer buff)
   (write-string buff)
   (clear-buffer buff))
 
-(define editor-config
+(define global-map
   (list (cons 'buffer-list '())
 	(cons 'frames '())
 	(cons 'windows '())

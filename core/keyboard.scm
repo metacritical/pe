@@ -40,5 +40,5 @@
 (define (handle-kb key)
   (if (not (eq? key #\q))
       (let [[code (kbd-seq key)]]
-	(if (null? code)(display key) (display (caar code)))
+	(if (null? code)(display (format "~S" key)) (display (caar code)))
 	(read-key))))
