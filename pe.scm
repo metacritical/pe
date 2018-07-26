@@ -34,6 +34,21 @@
 	(cons 'mode-line '())
 	(cons 'echo-area "")))
 
+(define (update-global-map key value)
+  "Update global map")
+
+(define (new-buffer name)
+  (list (cons 'name "")
+	(cons 'path "")
+	(cons 'text "")
+	(cons 'changed "")
+	(cons 'permissions "rw")
+	(cons 'cursor '(0 0))))
+
+
+(define (init-global-map)
+  (set! global-map "Set buffer name etc..."))
+
 ;;Init Exit Routines
 (on-exit exit-routines)
 
