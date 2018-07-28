@@ -1,14 +1,9 @@
-(require-extension stty srfi-1)
+(require-extension stty srfi-1 srfi-13)
 (require "core/keyboard.scm")
 
 (define (read-key)
   (let [[key (read-char)]]
     (handle-kb key)))
-
-(define (editor-draw-rows)
-  (let loop [[step 0] [str ""] [rows (car screen-size)]]
-    (if (< step rows)
-	(loop (+ step 1) (to<-tmpb "\r\n") rows))))
 
 (define (redraw-screen)
   (to<-tmpb (string-append hide-cursor clear-screen reset-cursor show-cursor)))
@@ -16,13 +11,17 @@
 (define (post-draw-routine)
   (to<-tmpb (string-append hide-cursor reset-cursor show-cursor)))
 
+(define (get-buffer-list)
+  (filter (lambda (i) (eq? (car i) 'buffer-list)) global-map))
+
 (define (generate-new-buffer)
-  '((cons 'name "(New file)")
-    (cons 'cursor (cons 0 0))))
+  (let [[buff (new-buffer "New Buffer")][buff-lst (car (get-buffer-list))]]
+    (set! (cdr buff-lst) (cons buff (cdr buff-lst)))))
 
 (system "stty -ixon")
 (redraw-screen)
-(editor-draw-rows)
+(generate-new-buffer)
 (post-draw-routine)
 (reify-buffer tmp-buffer)
+;; (pp global-map)
 (with-stty '(not echo icanon isig icrnl opost) read-key)

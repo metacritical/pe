@@ -27,8 +27,16 @@
   (write-string buff)
   (clear-buffer buff))
 
+(define (new-buffer name)
+  (list (cons 'name name)
+	(cons 'path "")
+	(cons 'text "")
+	(cons 'changed #f)
+	(cons 'cursor '(0 . 0))
+	(cons 'permissions "rw")))
+
 (define global-map
-  (list (cons 'buffer-list '())
+  (list (cons 'buffer-list (list (new-buffer "*scratch*")))
 	(cons 'frames '())
 	(cons 'windows '())
 	(cons 'mode-line '())
@@ -36,14 +44,6 @@
 
 (define (update-global-map key value)
   "Update global map")
-
-(define (new-buffer name)
-  (list (cons 'name "")
-	(cons 'path "")
-	(cons 'text "")
-	(cons 'changed "")
-	(cons 'permissions "rw")
-	(cons 'cursor '(0 0))))
 
 
 (define (init-global-map)
@@ -54,3 +54,4 @@
 
 ;;Init
 (require "core/init.scm")
+
