@@ -26,9 +26,15 @@
 	(cons 'mode-line '())
 	(cons 'echo-area "")))
 
-(define (update-global-map key value)
-  "Update global map")
+(define (get-attr map-name attr)
+  (filter (lambda (i) (eq? (car i) attr)) map-name))
 
+(define (set-attr map-name key val)
+  (let [[curr-buff (get-attr map-name key)]]
+    (set! (cdar curr-buff) val)))
+
+(define (update-global-map key val)
+  (set-attr global-map key val))
 
 (define (init-global-map)
   (set! global-map "Set buffer name etc..."))

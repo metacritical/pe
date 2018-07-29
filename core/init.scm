@@ -27,16 +27,9 @@
 (define (get-buffer-list)
   (filter (lambda (i) (eq? (car i) 'buffer-list)) global-map))
 
-(define (get-attr map-name attr)
-  (filter (lambda (i) (eq? (car i) attr)) map-name))
-
-(define (set-attr map-name key val)
-  (let [[curr-buff (get-attr map-name key)]]
-    (set! (cdar curr-buff) val)))
-
 (define (set-current-buffer buff)
   (let [[name (get-attr buff 'name)]]
-    (set-attr global-map 'current-buffer (cdar name))))
+    (update-global-map 'current-buffer (cdar name))))
 
 (define (generate-new-buffer)
   (let [[buff (new-buffer "New Buffer")][buff-lst (car (get-buffer-list))]]
