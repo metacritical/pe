@@ -33,6 +33,9 @@
   (let [[curr-buff (get-attr map-name key)]]
     (set! (cdar curr-buff) val)))
 
+(define (current-buffer)
+  (get-attr global-map 'current-buffer))
+
 (define (update-global-map key val)
   (set-attr global-map key val))
 
