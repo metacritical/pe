@@ -19,7 +19,7 @@
 	(cons 'permissions "rw")))
 
 (define global-map
-  (list (cons 'buffer-list (list (new-buffer "*scratch*")))
+  (list (cons 'buffer-list (map new-buffer '("*scratch*" "*Messages*")))
 	(cons 'current-buffer "")
 	(cons 'frames '())
 	(cons 'windows '())
@@ -44,4 +44,3 @@
 
 ;;Init
 (require "core/init.scm")
-
