@@ -1,5 +1,5 @@
 (require-extension stty srfi-1 srfi-13)
-(require "core/keyboard.scm")
+(include "keyboard.scm")
 
 (define tmp-buffer "")
 
